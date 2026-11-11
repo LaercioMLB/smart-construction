@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="492" height="430" preserveAspectRatio="xMinYMin meet" viewBox="0 0 492 430" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="492" height="430"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-430)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="6" width="492" height="365" rx="10" ry="10" style="stroke: rgb(90%,85%,85%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="10" y="375" style="font-family: Helvetica; font-size: 7.5px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,750) scale(1,-1)">Rede Docker smart-construction_default</text>
+			<polyline points="246 384, 246 356" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="246 356, 243.5 361, 248.5 361" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="330.44939999999997" y="372" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,744) scale(1,-1)">HTTP :8081 para :80</text>
+			<polyline points="210 308, 210 282, 115 282, 115 262" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="115 262, 112.5 267, 117.5 267" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="59.20269999999999" y="291" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,582) scale(1,-1)">HTTP :3000 / páginas e assets</text>
+			<polyline points="282 308, 282 282, 377 282, 377 262" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="377 262, 374.5 267, 379.5 267" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="349.1245" y="291" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,582) scale(1,-1)">HTTP :8000 /api/v1</text>
+			<polyline points="210 232, 282 232" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="282 232, 277 229.5, 277 234.5" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="226.0533" y="246" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,492) scale(1,-1)">HTTP :8000</text>
+			<polyline points="81 200, 81 140" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="81 140, 78.5 145, 83.5 145" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="112.1889" y="170" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,340) scale(1,-1)">S3 :8333</text>
+			<polyline points="328 200, 328 171, 246 171, 246 140" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="246 140, 243.5 145, 248.5 145" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="255.3103" y="181" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,362) scale(1,-1)">SQL :5432</text>
+			<polyline points="416 200, 416 140" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd;"/>
+			<polygon points="416 140, 413.5 145, 418.5 145" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(77%,15%,15%); fill-rule: evenodd;"/>
+			<text x="439.1889" y="170" style="font-family: Helvetica; font-size: 7.4px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,340) scale(1,-1)">S3 :8333</text>
+			<polyline points="81 64, 81 44" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd; stroke-dasharray: 3, 3;"/>
+			<polygon points="81 44, 78.5 49, 83.5 49" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(45%,45%,47%); fill-rule: evenodd;"/>
+			<polyline points="246 64, 246 44" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd; stroke-dasharray: 3, 3;"/>
+			<polygon points="246 44, 243.5 49, 248.5 49" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(45%,45%,47%); fill-rule: evenodd;"/>
+			<polyline points="411 64, 411 44" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 1.2; fill: None; fill-rule: evenodd; stroke-dasharray: 3, 3;"/>
+			<polygon points="411 44, 408.5 49, 413.5 49" style="stroke: rgb(45%,45%,47%); stroke-linecap: butt; stroke-width: 0.3; fill: rgb(45%,45%,47%); fill-rule: evenodd;"/>
+			<rect x="164" y="384" width="164" height="40" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="191.7345" y="406.5" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,813) scale(1,-1)">Visitante / administrador</text>
+			<text x="219.3886" y="395.5" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,791) scale(1,-1)">Navegador web</text>
+			<rect x="164" y="308" width="164" height="48" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="212.66415" y="340.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,680) scale(1,-1)">Gateway Nginx</text>
+			<text x="225.5104" y="329.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,658) scale(1,-1)">gateway :80</text>
+			<text x="213.2592" y="318.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,636) scale(1,-1)">Entrada local :8081</text>
+			<rect x="20" y="200" width="190" height="62" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="78.3115" y="239.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,478) scale(1,-1)">Frontend Next.js</text>
+			<text x="97.4668" y="228.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,456) scale(1,-1)">web :3000</text>
+			<text x="50.586200000000005" y="217.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,434) scale(1,-1)">Páginas, assets e JSON editorial local</text>
+			<rect x="282" y="200" width="190" height="62" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="339.01415" y="239.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,478) scale(1,-1)">Backend FastAPI</text>
+			<text x="361.3668" y="228.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,456) scale(1,-1)">api :8000</text>
+			<text x="314.0568" y="217.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,434) scale(1,-1)">Autenticação, cadastros e publicação</text>
+			<rect x="8" y="64" width="146" height="76" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="35.77409999999999" y="110.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,220) scale(1,-1)">SeaweedFS editorial</text>
+			<text x="49.9464" y="99.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,198) scale(1,-1)">storage :8333 / S3</text>
+			<text x="46.5796" y="88.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,176) scale(1,-1)">Bucket smart-assets</text>
+			<rect x="173" y="64" width="146" height="76" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="212.66415" y="110.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,220) scale(1,-1)">PostgreSQL 17</text>
+			<text x="220.4374" y="99.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,198) scale(1,-1)">db :5432 / SQL</text>
+			<text x="202.072" y="88.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,176) scale(1,-1)">Banco smart_construction</text>
+			<rect x="338" y="64" width="146" height="76" rx="7" ry="7" style="stroke: rgb(77%,15%,15%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,97%,97%); fill-rule: evenodd;"/>
+			<text x="367.0668" y="110.0" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,220) scale(1,-1)">SeaweedFS privado</text>
+			<text x="367.2772" y="99.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,198) scale(1,-1)">private-storage :8333 / S3</text>
+			<text x="358.4194" y="88.0" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,176) scale(1,-1)">Bucket smart-cadastros-private</text>
+			<rect x="8" y="14" width="146" height="30" rx="7" ry="7" style="stroke: rgb(90%,85%,85%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="53.095349999999996" y="31.5" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,63) scale(1,-1)">storage-data</text>
+			<text x="48.4758" y="20.5" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,41) scale(1,-1)">Volume persistente</text>
+			<rect x="173" y="14" width="146" height="30" rx="7" ry="7" style="stroke: rgb(90%,85%,85%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="216.02609999999999" y="31.5" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,63) scale(1,-1)">backend-data</text>
+			<text x="213.4758" y="20.5" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,41) scale(1,-1)">Volume persistente</text>
+			<rect x="338" y="14" width="146" height="30" rx="7" ry="7" style="stroke: rgb(90%,85%,85%); stroke-linecap: butt; stroke-width: 0.8; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="366.29955" y="31.5" style="font-family: Helvetica-Bold; font-size: 9.3px;fill: rgb(18%,18%,20%); stroke:none;" transform="translate(0,63) scale(1,-1)">private-storage-data</text>
+			<text x="378.4758" y="20.5" style="font-family: Helvetica; font-size: 7.6px;fill: rgb(45%,45%,47%); stroke:none;" transform="translate(0,41) scale(1,-1)">Volume persistente</text>
+		</g>
+	</g>
+</svg>

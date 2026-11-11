@@ -1,0 +1,21 @@
+flowchart TB
+  migration["api-migrate<br/>Alembic / smart_migrator"]
+  admin_cli["CLI manual dentro da API<br/>Administrador, profissões e auditoria"]
+  tests["api-test / perfil tools<br/>Bancos smart_test_&lt;uuid&gt; e objetos S3"]
+  private_init["private-storage-init<br/>Preparação do bucket privado"]
+  editorial_tools["storage-init / storage-cli<br/>Carga de public/images, índice<br/>e manutenção editorial sob demanda"]
+  db["PostgreSQL 17<br/>db :5432 / SQL<br/>Migrations, gestão e testes isolados"]
+  private["SeaweedFS privado<br/>private-storage :8333 / S3<br/>Bootstrap e testes de arquivos"]
+  editorial["SeaweedFS editorial<br/>storage :8333 / S3<br/>Objetos, políticas e índice"]
+  setup["Setup local<br/>setup.*, backend-setup<br/>storage-setup"]
+  config[".env e .secrets<br/>Arquivos locais"]
+  compose["Docker Compose<br/>Injeta env e segredos"]
+  migration -->|"SQL :5432 / migrações Alembic"| db
+  admin_cli -->|"SQL :5432 / gestão manual"| db
+  tests -->|"SQL :5432 / bancos smart_test_&lt;uuid&gt;"| db
+  tests -->|"S3 :8333 / objetos isolados de teste"| private
+  private_init -->|"S3 :8333 / bootstrap privado"| private
+  editorial_tools -->|"S3 :8333 / carga e manutenção editorial"| editorial
+  setup -.->|"Cria e preserva configuração e segredos locais"| config
+  config -.->|"Montagem de secrets e variáveis nos serviços"| compose
+  classDef default fill:#fff8f8,stroke:#c62828,color:#303033;

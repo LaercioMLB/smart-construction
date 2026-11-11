@@ -1,0 +1,22 @@
+flowchart TB
+  browser["Visitante / administrador<br/>Navegador web"]
+  gateway["Gateway Nginx<br/>gateway :80<br/>Entrada local :8081"]
+  web["Frontend Next.js<br/>web :3000<br/>Páginas, assets e JSON editorial local"]
+  api["Backend FastAPI<br/>api :8000<br/>Autenticação, cadastros e publicação"]
+  editorial["SeaweedFS editorial<br/>storage :8333 / S3<br/>Bucket smart-assets"]
+  db["PostgreSQL 17<br/>db :5432 / SQL<br/>Banco smart_construction"]
+  private["SeaweedFS privado<br/>private-storage :8333 / S3<br/>Bucket smart-cadastros-private"]
+  editorial_volume["storage-data<br/>Volume persistente"]
+  db_volume["backend-data<br/>Volume persistente"]
+  private_volume["private-storage-data<br/>Volume persistente"]
+  browser -->|"HTTP 127.0.0.1:8081 para gateway:80"| gateway
+  gateway -->|"HTTP :3000 / páginas e assets"| web
+  gateway -->|"HTTP :8000 /api/v1"| api
+  web -->|"HTTP :8000 / leituras SSR e proxy da API"| api
+  web -->|"HTTP/S3 :8333 /assets / leitura editorial"| editorial
+  api -->|"SQL :5432 / runtime smart_api"| db
+  api -->|"S3 autenticado :8333 / arquivos dos cadastros"| private
+  editorial -.->|"Persistência local dos objetos editoriais"| editorial_volume
+  db -.->|"Persistência local do PostgreSQL"| db_volume
+  private -.->|"Persistência local dos arquivos privados"| private_volume
+  classDef default fill:#fff8f8,stroke:#c62828,color:#303033;
