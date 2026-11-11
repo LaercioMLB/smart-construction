@@ -1,0 +1,22 @@
+{
+  "professionals": 120,
+  "professionalsDisplay": "120+",
+  "projects": 1500,
+  "projectsDisplay": "1.5k",
+  "rating": 4.8,
+  "satisfaction": 100,
+  "servicesLinkLabel": "Ver todos os 30+ Serviços →",
+  "professionalSection": {
+    "description": "Escolha entre mais de 100 profissionais certificados.",
+    "availability": "+500 Profissionais Disponíveis"
+  },
+  "reasons": [
+    { "icon": "calendar-blank-outline", "text": "10+ anos" },
+    { "icon": "home-outline", "text": "1000+ obras" },
+    { "icon": "star-outline", "text": "4.8★ avaliação" }
+  ],
+  "portfolio": {
+    "ratingLabel": "4.8/5 Avaliação de Clientes",
+    "projectsLabel": "1000+ Projetos Entregues"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "preparedAt": "2026-11-11",
+  "sourceRepository": "sos-construir-v2",
+  "sourceCommit": "0bc34913fce50ae9994c9999f1c38f42fde8ff3a",
+  "copiedFiles": 628,
+  "catalogServices": 93,
+  "catalogProducts": 186,
+  "scope": "Cópia didática independente, sem banco, contas, volumes, segredos ou histórico Git da origem.",
+  "assets": "Imagens ilustrativas reutilizadas com proveniência em docs/evidence; não documentam obras da empresa fictícia."
+}

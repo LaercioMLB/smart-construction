@@ -1,0 +1,4280 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Smart Construction — API de cadastros",
+    "version": "0.1.0",
+    "description": "Contrato evolutivo. Base, autenticação administrativa e profissões implementadas localmente; cadastros, arquivos e publicação permanecem planejados."
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "Mesma origem do frontend, encaminhada pelo proxy para a futura API."
+    }
+  ],
+  "security": [],
+  "tags": [
+    {
+      "name": "Autenticacao"
+    },
+    {
+      "name": "Profissoes"
+    },
+    {
+      "name": "Cadastros"
+    },
+    {
+      "name": "Administracao"
+    },
+    {
+      "name": "Arquivos"
+    },
+    {
+      "name": "Profissionais"
+    },
+    {
+      "name": "Operacao"
+    }
+  ],
+  "paths": {
+    "/admin/sessao": {
+      "post": {
+        "operationId": "criarSessao",
+        "tags": ["Autenticacao"],
+        "summary": "Autenticar administrador",
+        "description": "Validar Origin e limitar tentativas antes de autenticar. Rotacionar sessão e CSRF no login. Cookie de sessão apenas em Set-Cookie; senha nunca é devolvida.",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "smart_admin_session=<opaco>; HttpOnly; Secure em produção; SameSite=Lax; Path=/api/v1/admin. Sem Domain."
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sessao"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      },
+      "get": {
+        "operationId": "consultarSessao",
+        "tags": ["Autenticacao"],
+        "summary": "Consultar sessão atual",
+        "description": "Consultar sessão atual",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Sessao"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "encerrarSessao",
+        "tags": ["Autenticacao"],
+        "summary": "Revogar sessão",
+        "description": "Revogar sessão",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Sessão revogada; cookie removido.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "Set-Cookie": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Remover o cookie usando mesmo nome e Path."
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/profissoes": {
+      "get": {
+        "operationId": "listarProfissoesAtivas",
+        "tags": ["Profissoes"],
+        "summary": "Listar profissões ativas",
+        "description": "Listar profissões ativas",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissoesPublicas"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/profissoes": {
+      "get": {
+        "operationId": "listarProfissoesAdministrativas",
+        "tags": ["Profissoes"],
+        "summary": "Listar profissões ativas e inativas",
+        "description": "Listar profissões ativas e inativas",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          },
+          {
+            "in": "query",
+            "name": "ativo",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissoesAdministrativas"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      },
+      "post": {
+        "operationId": "criarProfissao",
+        "tags": ["Profissoes"],
+        "summary": "Criar profissão com histórico",
+        "description": "Normalizar nome e gerar slug no servidor. Impedir duplicidade por nome normalizado e slug; registrar administrador. Não adicionar automaticamente sugestões públicas.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfissaoCriacao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissaoAdministrativa"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/profissoes/{profissao_id}": {
+      "patch": {
+        "operationId": "editarProfissao",
+        "tags": ["Profissoes"],
+        "summary": "Editar ou desativar profissão",
+        "description": "Preservar vínculos existentes ao desativar; impedir novas seleções. Registrar alterações. Atualizar nome público e cache dos profissionais afetados.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissao_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfissaoAlteracao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissaoAdministrativa"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/cadastros/profissionais": {
+      "post": {
+        "operationId": "enviarCadastroProfissional",
+        "tags": ["Cadastros"],
+        "summary": "Enviar cadastro de profissional",
+        "description": "Receber dados como texto JSON em dados e fotos em partes separadas. Preservar finalidade. Limite técnico proposto: 40 MiB por requisição. Verificar documento e regras de profissões no servidor. Novo envio com CPF existente não cria nem sobrescreve cadastro, em qualquer status; responder conflito genérico sem identificar o registro existente.",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfissionalEnvio"
+              },
+              "encoding": {
+                "dados": {
+                  "contentType": "text/plain; charset=utf-8"
+                },
+                "foto_perfil": {
+                  "contentType": "image/jpeg, image/png"
+                },
+                "fotos_trabalhos": {
+                  "contentType": "image/jpeg, image/png"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recebimento"
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Erro413"
+          },
+          "415": {
+            "$ref": "#/components/responses/Erro415"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        },
+        "x-max-request-bytes": 41943040
+      }
+    },
+    "/cadastros/empresas": {
+      "post": {
+        "operationId": "enviarCadastroEmpresa",
+        "tags": ["Cadastros"],
+        "summary": "Enviar cadastro de empresa",
+        "description": "Cadastro exclusivamente por CNPJ, com logo opcional. Limite técnico proposto: 7 MiB. Empresa e imagens permanecem privadas após aprovação. CNPJ existente, inclusive reprovado, não pode gerar outro cadastro público nem sobrescrever dados.",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdempotencyKey"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/EmpresaEnvio"
+              },
+              "encoding": {
+                "dados": {
+                  "contentType": "text/plain; charset=utf-8"
+                },
+                "logo": {
+                  "contentType": "image/jpeg, image/png"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recebimento"
+                }
+              }
+            }
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "413": {
+            "$ref": "#/components/responses/Erro413"
+          },
+          "415": {
+            "$ref": "#/components/responses/Erro415"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        },
+        "x-max-request-bytes": 7340032
+      }
+    },
+    "/admin/cadastros": {
+      "get": {
+        "operationId": "listarCadastros",
+        "tags": ["Administracao"],
+        "summary": "Listar cadastros por tipo e status",
+        "description": "Listar cadastros por tipo e status",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          },
+          {
+            "in": "query",
+            "name": "tipo",
+            "schema": {
+              "type": "string",
+              "enum": ["profissional", "empresa"]
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "schema": {
+              "type": "string",
+              "enum": ["pendente", "aprovado", "reprovado"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastrosPagina"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}": {
+      "get": {
+        "operationId": "consultarCadastro",
+        "tags": ["Administracao"],
+        "summary": "Consultar cadastro completo privado",
+        "description": "Consultar cadastro completo privado",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "editarCadastro",
+        "tags": ["Administracao"],
+        "summary": "Corrigir cadastro com histórico",
+        "description": "Editar somente os campos permitidos do subtipo original. Não alterar status, aceites originais, auditoria ou métricas. Validar o resultado completo, documento único e profissões; preservar seleções inativas já vinculadas sem permitir novas. Atualização e histórico na mesma transação. Manter aprovação e visibilidade existentes; se publicado, atualizar revisão pública somente após confirmar dados e imagens.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CadastroAlteracao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/historico": {
+      "get": {
+        "operationId": "listarHistoricoCadastro",
+        "tags": ["Administracao"],
+        "summary": "Consultar histórico privado do cadastro",
+        "description": "Consultar histórico privado do cadastro",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoricoPagina"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/aprovar": {
+      "post": {
+        "operationId": "aprovarCadastro",
+        "tags": ["Administracao"],
+        "summary": "Aprovar cadastro pendente",
+        "description": "Somente pendente e válido; todas as sugestões de profissões precisam estar resolvidas. Profissional publica após imagens prontas; empresa permanece privada. Não declarar publicação concluída se bucket falhar. Gravar decisão e histórico na mesma transação; reconciliar objetos caso haja falha entre banco e bucket.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/reprovar": {
+      "post": {
+        "operationId": "reprovarCadastro",
+        "tags": ["Administracao"],
+        "summary": "Reprovar cadastro pendente com motivo",
+        "description": "Reprovar cadastro pendente com motivo",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Motivo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/reabrir": {
+      "post": {
+        "operationId": "reabrirCadastro",
+        "tags": ["Administracao"],
+        "summary": "Reabrir cadastro reprovado",
+        "description": "Somente administrador. Mudar reprovado para pendente no mesmo registro, preservando protocolo, dados, decisões anteriores e arquivos ainda disponíveis. Não criar novo cadastro nem publicar automaticamente.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/profissionais/{profissional_id}/despublicar": {
+      "post": {
+        "operationId": "despublicarProfissional",
+        "tags": ["Administracao"],
+        "summary": "Despublicar profissional",
+        "description": "Retirar a visibilidade do profissional aprovado, preservando cadastro, aprovação e histórico. Remover referências/derivados públicos e invalidar cache.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissional_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroProfissionalAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/profissionais/{profissional_id}/publicar": {
+      "post": {
+        "operationId": "publicarProfissional",
+        "tags": ["Administracao"],
+        "summary": "Republicar profissional aprovado",
+        "description": "Republicar profissional aprovado e despublicado, após conferir campos, profissões resolvidas e arquivos disponíveis. Somente administrador.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissional_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CadastroProfissionalAdministrativo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/arquivos": {
+      "post": {
+        "operationId": "adicionarArquivoCadastro",
+        "tags": ["Arquivos"],
+        "summary": "Adicionar imagem ou substituir perfil/logo",
+        "description": "Foto de perfil e logo substituem a imagem da mesma finalidade somente após validação/persistência. Foto de trabalho acrescenta um item, respeitando seis no total. Empresa aceita apenas logo; profissional aceita perfil/trabalho. Atualizar versão e histórico do cadastro; se publicado, confirmar revisão pública antes de remover referências antigas. Limite técnico proposto de 7 MiB.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ArquivoEnvioAdministrativo"
+              },
+              "encoding": {
+                "arquivo": {
+                  "contentType": "image/jpeg, image/png"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArquivoResultado"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "413": {
+            "$ref": "#/components/responses/Erro413"
+          },
+          "415": {
+            "$ref": "#/components/responses/Erro415"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        },
+        "x-max-request-bytes": 7340032
+      }
+    },
+    "/admin/cadastros/{cadastro_id}/arquivos/{arquivo_id}": {
+      "delete": {
+        "operationId": "removerArquivoCadastro",
+        "tags": ["Arquivos"],
+        "summary": "Remover referência de imagem com histórico",
+        "description": "Conferir vínculo ao cadastro. Remover da revisão pública quando aplicável, incrementar versão e registrar histórico. Limpeza física é reconciliável e segue política de retenção; não excluir binário ainda necessário à revisão vigente.",
+        "security": [
+          {
+            "AdminSession": [],
+            "CsrfToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cadastro_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "arquivo_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/IfMatch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "ETag": {
+                "description": "Versão forte do recurso usada em If-Match.",
+                "schema": {
+                  "type": "string",
+                  "minLength": 3,
+                  "maxLength": 32,
+                  "pattern": "^\"[1-9][0-9]*\"$"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArquivoRemocaoResultado"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "409": {
+            "$ref": "#/components/responses/Erro409"
+          },
+          "412": {
+            "$ref": "#/components/responses/Erro412"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "428": {
+            "$ref": "#/components/responses/Erro428"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/arquivos/{arquivo_id}": {
+      "get": {
+        "operationId": "consultarImagemPrivada",
+        "tags": ["Arquivos"],
+        "summary": "Ler imagem privada com autorização",
+        "description": "Ler imagem privada com autorização",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "arquivo_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Imagem privada transmitida pela API, sem expor bucket, chave ou credenciais.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              },
+              "X-Content-Type-Options": {
+                "schema": {
+                  "type": "string",
+                  "const": "nosniff"
+                }
+              },
+              "Content-Disposition": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "inline com nome gerado pelo servidor; não refletir filename recebido."
+              }
+            },
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/profissionais": {
+      "get": {
+        "operationId": "listarProfissionaisPublicos",
+        "tags": ["Profissionais"],
+        "summary": "Listar profissionais aprovados e publicados",
+        "description": "Retornar somente a projeção pública de aprovados com publicação pronta. Paginação estável por ordenação e UUID de desempate. Sem ordenação ou filtros por métricas fictícias. O adaptador do frontend converte parâmetros e meta para os contratos locais.",
+        "security": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          },
+          {
+            "$ref": "#/components/parameters/Search"
+          },
+          {
+            "in": "query",
+            "name": "profissao_id",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "maxItems": 5,
+              "uniqueItems": true
+            }
+          },
+          {
+            "in": "query",
+            "name": "cidade",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            }
+          },
+          {
+            "in": "query",
+            "name": "uf",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AC",
+                "AL",
+                "AP",
+                "AM",
+                "BA",
+                "CE",
+                "DF",
+                "ES",
+                "GO",
+                "MA",
+                "MT",
+                "MS",
+                "MG",
+                "PA",
+                "PB",
+                "PR",
+                "PE",
+                "PI",
+                "RJ",
+                "RN",
+                "RS",
+                "RO",
+                "RR",
+                "SC",
+                "SP",
+                "SE",
+                "TO"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort_by",
+            "schema": {
+              "type": "string",
+              "enum": ["relevancia", "nome"],
+              "default": "relevancia"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissionaisPagina"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/profissionais/{profissional_id}": {
+      "get": {
+        "operationId": "consultarProfissionalPublico",
+        "tags": ["Profissionais"],
+        "summary": "Consultar perfil público",
+        "description": "Cadastro inexistente, pendente, reprovado ou despublicado retorna 404. Nunca retornar contatos pessoais ou dados de empresa. CTA de WhatsApp continua usando a Smart Construction no frontend.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissional_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfissionalPublico"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "consultarLiveness",
+        "tags": ["Operacao"],
+        "summary": "Conferir processo da API",
+        "description": "Sem detalhes internos ou dados pessoais. Não depende do banco para confirmar processo ativo.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Saude"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "consultarReadiness",
+        "tags": ["Operacao"],
+        "summary": "Conferir prontidão da API e banco",
+        "description": "Retorna 200 se a API consegue usar o banco/migrations esperadas; 503 caso contrário. Não revelar conexão, usuários ou segredos.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Saude"
+                }
+              }
+            }
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/admin/profissoes/{profissao_id}/historico": {
+      "get": {
+        "operationId": "consultarHistoricoProfissao",
+        "tags": ["Administracao"],
+        "summary": "Consultar histórico de uma profissão",
+        "description": "Histórico privado de criação e edição da profissão, com administrador, data e valores anteriores e atuais.",
+        "security": [
+          {
+            "AdminSession": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissao_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Page"
+          },
+          {
+            "$ref": "#/components/parameters/Limit"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação concluída.",
+            "headers": {
+              "Cache-Control": {
+                "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+                "schema": {
+                  "type": "string",
+                  "const": "no-store"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoricoPagina"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Erro401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Erro403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "422": {
+            "$ref": "#/components/responses/Erro422"
+          },
+          "429": {
+            "$ref": "#/components/responses/Erro429"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/profissionais/{profissional_id}/imagens/{arquivo_id}": {
+      "get": {
+        "operationId": "consultarImagemPublicada",
+        "tags": ["Profissionais"],
+        "summary": "Ler imagem de profissional publicado",
+        "description": "Verifica aprovação, visibilidade e vínculo em cada consulta. Nunca expõe chave ou credenciais do bucket. Retorna 404 quando despublicado.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "profissional_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "arquivo_id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Imagem publicada, sem cache.",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "image/png": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/Erro404"
+          },
+          "503": {
+            "$ref": "#/components/responses/Erro503"
+          }
+        }
+      }
+    },
+    "/cadastros/configuracao": {
+      "get": {
+        "operationId": "consultarConfiguracaoCadastro",
+        "tags": ["Cadastros"],
+        "summary": "Consultar disponibilidade e versões de aceite",
+        "description": "Sem dados pessoais ou credenciais. Desabilitado retorna versões nulas; frontend também exige habilitação explícita.",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Disponibilidade atual, sem cache.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfiguracaoCadastro"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErroCampo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": ["path", "code", "message"]
+      },
+      "Erro": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500
+          },
+          "field_errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErroCampo"
+            }
+          },
+          "request_id": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "required": ["code", "message", "field_errors", "request_id"]
+      },
+      "Administrador": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "login": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          }
+        },
+        "required": ["id", "nome", "login"]
+      },
+      "Sessao": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "administrador": {
+            "$ref": "#/components/schemas/Administrador"
+          },
+          "expira_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "csrf_token": {
+            "type": "string",
+            "minLength": 32,
+            "maxLength": 256,
+            "description": "Token de CSRF em memória; não é a credencial de sessão e não deve ir para logs ou localStorage."
+          }
+        },
+        "required": ["administrador", "expira_em", "csrf_token"]
+      },
+      "Login": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "login": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "senha": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256,
+            "writeOnly": true,
+            "format": "password"
+          }
+        },
+        "required": ["login", "senha"]
+      },
+      "ProfissaoPublica": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "slug": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          }
+        },
+        "required": ["id", "nome", "slug"]
+      },
+      "ProfissaoAdministrativa": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "slug": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "versao": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["id", "nome", "slug", "ativo", "versao", "criado_em", "atualizado_em"]
+      },
+      "ProfissaoCriacao": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "ativo": {
+            "type": "boolean",
+            "default": true
+          }
+        },
+        "required": ["nome"]
+      },
+      "ProfissaoAlteracao": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          },
+          "ativo": {
+            "type": "boolean"
+          }
+        },
+        "minProperties": 1
+      },
+      "MetaPaginacao": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "total_pages": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": ["total", "page", "limit", "total_pages"]
+      },
+      "EnderecoEntrada": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cidade": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "uf": {
+            "type": "string",
+            "enum": [
+              "AC",
+              "AL",
+              "AP",
+              "AM",
+              "BA",
+              "CE",
+              "DF",
+              "ES",
+              "GO",
+              "MA",
+              "MT",
+              "MS",
+              "MG",
+              "PA",
+              "PB",
+              "PR",
+              "PE",
+              "PI",
+              "RJ",
+              "RN",
+              "RS",
+              "RO",
+              "RR",
+              "SC",
+              "SP",
+              "SE",
+              "TO"
+            ]
+          },
+          "cep": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 8,
+                "pattern": "^[0-9]{8}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "rua": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "numero": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 30
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "complemento": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "bairro": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": ["cidade", "uf"]
+      },
+      "LocalizacaoPublica": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cidade": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "uf": {
+            "type": "string",
+            "enum": [
+              "AC",
+              "AL",
+              "AP",
+              "AM",
+              "BA",
+              "CE",
+              "DF",
+              "ES",
+              "GO",
+              "MA",
+              "MT",
+              "MS",
+              "MG",
+              "PA",
+              "PB",
+              "PR",
+              "PE",
+              "PI",
+              "RJ",
+              "RN",
+              "RS",
+              "RO",
+              "RR",
+              "SC",
+              "SP",
+              "SE",
+              "TO"
+            ]
+          }
+        },
+        "required": ["cidade", "uf"]
+      },
+      "Curso": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150
+          },
+          "instituicao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "inicio": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1900,
+                "maximum": 9999
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "conclusao": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1900,
+                "maximum": 9999
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": ["nome"],
+        "description": "Se ambos os anos existirem, conclusão deve ser maior ou igual ao início. Não representa certificação verificada."
+      },
+      "ProfissaoSelecionada": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "profissao_id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "principal": {
+                "type": "boolean"
+              }
+            },
+            "required": ["profissao_id", "principal"]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "sugestao": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 100
+              },
+              "principal": {
+                "type": "boolean"
+              }
+            },
+            "required": ["sugestao", "principal"]
+          }
+        ],
+        "description": "Informar profissão existente ou sugestão. Exatamente uma escolha principal no conjunto; sugestões precisam ser resolvidas antes da aprovação."
+      },
+      "AceitesEmpresa": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "termos_aceitos": {
+            "type": "boolean",
+            "const": true
+          },
+          "versao_termos": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "privacidade_aceita": {
+            "type": "boolean",
+            "const": true
+          },
+          "versao_privacidade": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "maior_de_idade": {
+            "type": "boolean",
+            "const": true,
+            "description": "Declaração expressa de que o profissional ou representante tem 18 anos completos ou mais."
+          }
+        },
+        "required": [
+          "termos_aceitos",
+          "versao_termos",
+          "privacidade_aceita",
+          "versao_privacidade",
+          "maior_de_idade"
+        ]
+      },
+      "AceitesProfissional": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "termos_aceitos": {
+            "type": "boolean",
+            "const": true
+          },
+          "versao_termos": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "privacidade_aceita": {
+            "type": "boolean",
+            "const": true
+          },
+          "versao_privacidade": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          },
+          "autorizacao_publicacao": {
+            "type": "boolean",
+            "const": true
+          },
+          "maior_de_idade": {
+            "type": "boolean",
+            "const": true,
+            "description": "Declaração expressa de que o profissional ou representante tem 18 anos completos ou mais."
+          }
+        },
+        "required": [
+          "termos_aceitos",
+          "versao_termos",
+          "privacidade_aceita",
+          "versao_privacidade",
+          "autorizacao_publicacao",
+          "maior_de_idade"
+        ]
+      },
+      "ProfissionalDadosEntrada": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "cpf": {
+            "type": "string",
+            "minLength": 11,
+            "maxLength": 11,
+            "pattern": "^[0-9]{11}$",
+            "description": "CPF normalizado. A API também valida verificadores, sequências inválidas e unicidade; JSON Schema não comprova titularidade."
+          },
+          "nascimento": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date",
+                "description": "Opcional; se informada, deve ser compatível com 18 anos completos ou mais. A API calcula a idade; JSON Schema não comprova maioridade."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "whatsapp": {
+            "type": "string",
+            "minLength": 13,
+            "maxLength": 14,
+            "pattern": "^\\+55[1-9][0-9]{9,10}$",
+            "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 254,
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoEntrada"
+          },
+          "biografia": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 400
+          },
+          "profissoes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfissaoSelecionada"
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "contains": {
+              "type": "object",
+              "required": ["principal"],
+              "properties": {
+                "principal": {
+                  "const": true
+                }
+              }
+            },
+            "minContains": 1,
+            "maxContains": 1,
+            "description": "Sem repetição e com exatamente uma principal, considerando escolhas oficiais e sugestões. A API também confere repetição por identificador/nome normalizado."
+          },
+          "cursos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Curso"
+            },
+            "maxItems": 10
+          },
+          "aceites": {
+            "$ref": "#/components/schemas/AceitesProfissional"
+          }
+        },
+        "required": ["nome", "cpf", "whatsapp", "endereco", "biografia", "profissoes", "aceites"]
+      },
+      "EmpresaDadosEntrada": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "razao_social": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "nome_fantasia": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cnpj": {
+            "type": "string",
+            "minLength": 14,
+            "maxLength": 14,
+            "pattern": "^[A-Z0-9]{12}[0-9]{2}$",
+            "description": "CNPJ numérico ou alfanumérico normalizado em maiúsculas. Verificadores e unicidade são validados pela API."
+          },
+          "responsavel": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "whatsapp": {
+            "type": "string",
+            "minLength": 13,
+            "maxLength": 14,
+            "pattern": "^\\+55[1-9][0-9]{9,10}$",
+            "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 254,
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "segmento": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150,
+            "description": "Texto revisado pelo administrador; separado da lista de profissões."
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoEntrada"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aceites": {
+            "$ref": "#/components/schemas/AceitesEmpresa"
+          }
+        },
+        "required": [
+          "razao_social",
+          "cnpj",
+          "responsavel",
+          "whatsapp",
+          "segmento",
+          "endereco",
+          "aceites"
+        ]
+      },
+      "ProfissionalAlteracoes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "nome": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "cpf": {
+            "type": "string",
+            "minLength": 11,
+            "maxLength": 11,
+            "pattern": "^[0-9]{11}$",
+            "description": "CPF normalizado. A API também valida verificadores, sequências inválidas e unicidade; JSON Schema não comprova titularidade."
+          },
+          "nascimento": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date",
+                "description": "Opcional; se informada, deve ser compatível com 18 anos completos ou mais. A API calcula a idade; JSON Schema não comprova maioridade."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "whatsapp": {
+            "type": "string",
+            "minLength": 13,
+            "maxLength": 14,
+            "pattern": "^\\+55[1-9][0-9]{9,10}$",
+            "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 254,
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoEntrada"
+          },
+          "biografia": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 400
+          },
+          "profissoes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfissaoSelecionada"
+            },
+            "minItems": 1,
+            "maxItems": 5,
+            "uniqueItems": true,
+            "contains": {
+              "type": "object",
+              "required": ["principal"],
+              "properties": {
+                "principal": {
+                  "const": true
+                }
+              }
+            },
+            "minContains": 1,
+            "maxContains": 1,
+            "description": "Sem repetição e com exatamente uma principal, considerando escolhas oficiais e sugestões. A API também confere repetição por identificador/nome normalizado."
+          },
+          "cursos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Curso"
+            },
+            "maxItems": 10
+          }
+        },
+        "minProperties": 1,
+        "description": "Campos omitidos não mudam; null limpa apenas campos opcionais. Endereço, profissões e cursos substituem o conjunto completo informado."
+      },
+      "EmpresaAlteracoes": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "razao_social": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 200
+          },
+          "nome_fantasia": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cnpj": {
+            "type": "string",
+            "minLength": 14,
+            "maxLength": 14,
+            "pattern": "^[A-Z0-9]{12}[0-9]{2}$",
+            "description": "CNPJ numérico ou alfanumérico normalizado em maiúsculas. Verificadores e unicidade são validados pela API."
+          },
+          "responsavel": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "whatsapp": {
+            "type": "string",
+            "minLength": 13,
+            "maxLength": 14,
+            "pattern": "^\\+55[1-9][0-9]{9,10}$",
+            "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 254,
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "segmento": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 150,
+            "description": "Texto revisado pelo administrador; separado da lista de profissões."
+          },
+          "endereco": {
+            "$ref": "#/components/schemas/EnderecoEntrada"
+          },
+          "descricao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "minProperties": 1
+      },
+      "CadastroAlteracao": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "tipo": {
+                "type": "string",
+                "const": "profissional"
+              },
+              "alteracoes": {
+                "$ref": "#/components/schemas/ProfissionalAlteracoes"
+              }
+            },
+            "required": ["tipo", "alteracoes"]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "tipo": {
+                "type": "string",
+                "const": "empresa"
+              },
+              "alteracoes": {
+                "$ref": "#/components/schemas/EmpresaAlteracoes"
+              }
+            },
+            "required": ["tipo", "alteracoes"]
+          }
+        ],
+        "discriminator": {
+          "propertyName": "tipo"
+        }
+      },
+      "ImagemEnvio": {
+        "type": "string",
+        "format": "binary",
+        "description": "JPG/PNG, até 5.242.880 bytes. API valida conteúdo, decodificação e dimensões; filename e Content-Type não são prova de tipo.",
+        "x-max-bytes": 5242880,
+        "x-max-width": 8192,
+        "x-max-height": 8192,
+        "x-max-pixels": 25000000
+      },
+      "ProfissionalEnvio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dados": {
+            "type": "string",
+            "contentMediaType": "application/json",
+            "contentSchema": {
+              "$ref": "#/components/schemas/ProfissionalDadosEntrada"
+            },
+            "description": "JSON serializado conforme ProfissionalDadosEntrada; enviar como parte textual dados e validar após decodificação no servidor."
+          },
+          "foto_perfil": {
+            "$ref": "#/components/schemas/ImagemEnvio"
+          },
+          "fotos_trabalhos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImagemEnvio"
+            },
+            "maxItems": 6
+          }
+        },
+        "required": ["dados"]
+      },
+      "EmpresaEnvio": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dados": {
+            "type": "string",
+            "contentMediaType": "application/json",
+            "contentSchema": {
+              "$ref": "#/components/schemas/EmpresaDadosEntrada"
+            },
+            "description": "JSON serializado conforme EmpresaDadosEntrada; enviar como parte textual dados e validar após decodificação no servidor."
+          },
+          "logo": {
+            "$ref": "#/components/schemas/ImagemEnvio"
+          }
+        },
+        "required": ["dados"]
+      },
+      "Recebimento": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "protocolo": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "const": "pendente"
+          },
+          "recebido_em": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["protocolo", "status", "recebido_em"],
+        "description": "Sem documento, dados pessoais, identificador interno ou acesso público para consultar o cadastro."
+      },
+      "ArquivoAdministrativo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "finalidade": {
+            "type": "string",
+            "enum": ["foto_perfil", "foto_trabalho", "logo"]
+          },
+          "content_type": {
+            "type": "string",
+            "enum": ["image/jpeg", "image/png"]
+          },
+          "tamanho_bytes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5242880
+          },
+          "estado": {
+            "type": "string",
+            "enum": ["pronto", "processando", "erro"]
+          },
+          "ordem": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "acesso_path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300,
+            "pattern": "^/api/v1/admin/arquivos/"
+          }
+        },
+        "required": [
+          "id",
+          "finalidade",
+          "content_type",
+          "tamanho_bytes",
+          "estado",
+          "ordem",
+          "criado_em",
+          "acesso_path"
+        ]
+      },
+      "ImagemPublica": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "url": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "pattern": "^/api/v1/profissionais/[0-9a-f-]{36}/imagens/"
+          },
+          "ordem": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": ["id", "url", "ordem"],
+        "description": "Imagem reencodificada servida pela API somente enquanto o profissional estiver aprovado e publicado. O bucket permanece privado. Sem cache nesta versão."
+      },
+      "Publicacao": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "publicado": {
+            "type": "boolean"
+          },
+          "revisao": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "atualizado_em": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": ["publicado", "revisao", "atualizado_em"]
+      },
+      "CadastroProfissionalAdministrativo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "protocolo": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pendente", "aprovado", "reprovado"]
+          },
+          "versao": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "arquivos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArquivoAdministrativo"
+            }
+          },
+          "motivo_reprovacao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aceites": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "tipo": {
+                  "type": "string",
+                  "enum": ["termos", "privacidade", "publicacao", "maioridade"]
+                },
+                "versao": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "aceito_em": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": ["tipo", "versao", "aceito_em"]
+            }
+          },
+          "profissional_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tipo": {
+            "type": "string",
+            "const": "profissional"
+          },
+          "dados": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "nome": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 150
+              },
+              "cpf": {
+                "type": "string",
+                "minLength": 11,
+                "maxLength": 11,
+                "pattern": "^[0-9]{11}$",
+                "description": "CPF normalizado. A API também valida verificadores, sequências inválidas e unicidade; JSON Schema não comprova titularidade."
+              },
+              "nascimento": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Opcional; se informada, deve ser compatível com 18 anos completos ou mais. A API calcula a idade; JSON Schema não comprova maioridade."
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "whatsapp": {
+                "type": "string",
+                "minLength": 13,
+                "maxLength": 14,
+                "pattern": "^\\+55[1-9][0-9]{9,10}$",
+                "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+              },
+              "email": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 254,
+                    "format": "email"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "endereco": {
+                "$ref": "#/components/schemas/EnderecoEntrada"
+              },
+              "biografia": {
+                "type": "string",
+                "minLength": 20,
+                "maxLength": 400
+              },
+              "profissoes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ProfissaoSelecionada"
+                },
+                "minItems": 1,
+                "maxItems": 5,
+                "uniqueItems": true,
+                "contains": {
+                  "type": "object",
+                  "required": ["principal"],
+                  "properties": {
+                    "principal": {
+                      "const": true
+                    }
+                  }
+                },
+                "minContains": 1,
+                "maxContains": 1,
+                "description": "Sem repetição e com exatamente uma principal, considerando escolhas oficiais e sugestões. A API também confere repetição por identificador/nome normalizado."
+              },
+              "cursos": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Curso"
+                },
+                "maxItems": 10
+              }
+            },
+            "required": ["nome", "cpf", "whatsapp", "endereco", "biografia", "profissoes"]
+          },
+          "publicacao": {
+            "$ref": "#/components/schemas/Publicacao"
+          }
+        },
+        "required": [
+          "id",
+          "protocolo",
+          "status",
+          "versao",
+          "criado_em",
+          "atualizado_em",
+          "arquivos",
+          "motivo_reprovacao",
+          "aceites",
+          "profissional_id",
+          "tipo",
+          "dados",
+          "publicacao"
+        ]
+      },
+      "CadastroEmpresaAdministrativo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "protocolo": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 100
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pendente", "aprovado", "reprovado"]
+          },
+          "versao": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "arquivos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ArquivoAdministrativo"
+            }
+          },
+          "motivo_reprovacao": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aceites": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "tipo": {
+                  "type": "string",
+                  "enum": ["termos", "privacidade", "publicacao", "maioridade"]
+                },
+                "versao": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 80
+                },
+                "aceito_em": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "required": ["tipo", "versao", "aceito_em"]
+            }
+          },
+          "empresa_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tipo": {
+            "type": "string",
+            "const": "empresa"
+          },
+          "dados": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "razao_social": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 200
+              },
+              "nome_fantasia": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "cnpj": {
+                "type": "string",
+                "minLength": 14,
+                "maxLength": 14,
+                "pattern": "^[A-Z0-9]{12}[0-9]{2}$",
+                "description": "CNPJ numérico ou alfanumérico normalizado em maiúsculas. Verificadores e unicidade são validados pela API."
+              },
+              "responsavel": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 150
+              },
+              "whatsapp": {
+                "type": "string",
+                "minLength": 13,
+                "maxLength": 14,
+                "pattern": "^\\+55[1-9][0-9]{9,10}$",
+                "description": "Telefone brasileiro normalizado com +55, DDD e número; uso privado da administração."
+              },
+              "email": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 254,
+                    "format": "email"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "segmento": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 150,
+                "description": "Texto revisado pelo administrador; separado da lista de profissões."
+              },
+              "endereco": {
+                "$ref": "#/components/schemas/EnderecoEntrada"
+              },
+              "descricao": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": ["razao_social", "cnpj", "responsavel", "whatsapp", "segmento", "endereco"]
+          }
+        },
+        "required": [
+          "id",
+          "protocolo",
+          "status",
+          "versao",
+          "criado_em",
+          "atualizado_em",
+          "arquivos",
+          "motivo_reprovacao",
+          "aceites",
+          "empresa_id",
+          "tipo",
+          "dados"
+        ]
+      },
+      "CadastroAdministrativo": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CadastroProfissionalAdministrativo"
+          },
+          {
+            "$ref": "#/components/schemas/CadastroEmpresaAdministrativo"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "tipo",
+          "mapping": {
+            "profissional": "#/components/schemas/CadastroProfissionalAdministrativo",
+            "empresa": "#/components/schemas/CadastroEmpresaAdministrativo"
+          }
+        }
+      },
+      "CadastroResumo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "protocolo": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 100
+          },
+          "tipo": {
+            "type": "string",
+            "enum": ["profissional", "empresa"]
+          },
+          "nome_exibicao": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pendente", "aprovado", "reprovado"]
+          },
+          "versao": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "atualizado_em": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "protocolo",
+          "tipo",
+          "nome_exibicao",
+          "status",
+          "versao",
+          "criado_em",
+          "atualizado_em"
+        ]
+      },
+      "Historico": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "acao": {
+            "type": "string",
+            "enum": [
+              "criacao",
+              "edicao",
+              "aprovacao",
+              "reprovacao",
+              "reabertura",
+              "publicacao",
+              "despublicacao",
+              "arquivo_adicionado",
+              "arquivo_removido"
+            ]
+          },
+          "administrador": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Administrador"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ocorrido_em": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "motivo": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "alteracoes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "campo": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                },
+                "valor_anterior": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "valor_atual": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "required": ["campo", "valor_anterior", "valor_atual"]
+            }
+          }
+        },
+        "required": ["id", "acao", "administrador", "ocorrido_em", "motivo", "alteracoes"],
+        "description": "Histórico privado. Valores exibidos como texto/JSON serializado; nunca conter senhas, tokens, cookies ou conteúdo binário."
+      },
+      "ProfissionalPublico": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 150
+          },
+          "biografia": {
+            "type": "string",
+            "minLength": 20,
+            "maxLength": 400
+          },
+          "localizacao": {
+            "$ref": "#/components/schemas/LocalizacaoPublica"
+          },
+          "profissoes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "nome": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100
+                },
+                "slug": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 120,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                },
+                "principal": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["id", "nome", "slug", "principal"]
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "cursos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Curso"
+            },
+            "maxItems": 10
+          },
+          "foto_perfil": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ImagemPublica"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fotos_trabalhos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImagemPublica"
+            },
+            "maxItems": 6
+          }
+        },
+        "required": [
+          "id",
+          "nome",
+          "biografia",
+          "localizacao",
+          "profissoes",
+          "cursos",
+          "foto_perfil",
+          "fotos_trabalhos"
+        ],
+        "description": "Apenas profissionais aprovados e publicados. Sem CPF, nascimento, contatos, endereço completo, histórico ou métricas fictícias. WhatsApp permanece centralizado no frontend."
+      },
+      "MetaProfissionais": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "total": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "total_pages": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "facets": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "profissoes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "nome": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 100
+                    },
+                    "slug": {
+                      "type": "string",
+                      "minLength": 2,
+                      "maxLength": 120,
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                    },
+                    "count": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": ["id", "nome", "slug", "count"]
+                }
+              }
+            },
+            "required": ["profissoes"]
+          }
+        },
+        "required": ["total", "page", "limit", "total_pages", "facets"],
+        "description": "Facets consideram busca e localização antes da seleção de profissões, para preservar opções e contagens do filtro."
+      },
+      "ProfissoesPublicas": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfissaoPublica"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaPaginacao"
+          }
+        },
+        "required": ["data", "meta"]
+      },
+      "ProfissoesAdministrativas": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfissaoAdministrativa"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaPaginacao"
+          }
+        },
+        "required": ["data", "meta"]
+      },
+      "CadastrosPagina": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CadastroResumo"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaPaginacao"
+          }
+        },
+        "required": ["data", "meta"]
+      },
+      "HistoricoPagina": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Historico"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaPaginacao"
+          }
+        },
+        "required": ["data", "meta"]
+      },
+      "ProfissionaisPagina": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProfissionalPublico"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/MetaProfissionais"
+          }
+        },
+        "required": ["data", "meta"]
+      },
+      "Motivo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "motivo": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "required": ["motivo"]
+      },
+      "ArquivoEnvioAdministrativo": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "finalidade": {
+            "type": "string",
+            "enum": ["foto_perfil", "foto_trabalho", "logo"]
+          },
+          "arquivo": {
+            "$ref": "#/components/schemas/ImagemEnvio"
+          }
+        },
+        "required": ["finalidade", "arquivo"]
+      },
+      "ArquivoResultado": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "arquivo": {
+            "$ref": "#/components/schemas/ArquivoAdministrativo"
+          },
+          "versao_cadastro": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": ["arquivo", "versao_cadastro"]
+      },
+      "ArquivoRemocaoResultado": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "arquivo_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "versao_cadastro": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": ["arquivo_id", "versao_cadastro"]
+      },
+      "Saude": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok"
+          }
+        },
+        "required": ["status"]
+      },
+      "ConfiguracaoCadastro": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["habilitado", "versao_termos", "versao_privacidade"],
+        "properties": {
+          "habilitado": {
+            "type": "boolean"
+          },
+          "versao_termos": {
+            "type": ["string", "null"]
+          },
+          "versao_privacidade": {
+            "type": ["string", "null"]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AdminSession": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "smart_admin_session",
+        "description": "Sessão opaca; cookie HttpOnly, Secure em produção, SameSite=Lax, sem Domain e Path=/api/v1/admin. Nunca retornar o identificador no JSON."
+      },
+      "CsrfToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-CSRF-Token",
+        "description": "Token obtido na sessão, conferido em todas as mutações autenticadas, além da validação de Origin."
+      }
+    },
+    "parameters": {
+      "Page": {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "description": "Página, iniciando em 1."
+      },
+      "Limit": {
+        "in": "query",
+        "name": "limit",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 20
+        }
+      },
+      "Search": {
+        "in": "query",
+        "name": "search",
+        "schema": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "IfMatch": {
+        "in": "header",
+        "name": "If-Match",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 32,
+          "pattern": "^\"[1-9][0-9]*\"$"
+        },
+        "description": "ETag forte da versão corrente, por exemplo \"3\". Não aceitar wildcard. Ausente: 428; divergente: 412. Conferir novamente na transação."
+      },
+      "IdempotencyKey": {
+        "in": "header",
+        "name": "Idempotency-Key",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Chave aleatória por envio. Repetir a mesma chave/corpo repete o recebimento original. Corpo divergente: 409. Janela técnica proposta de 24 horas, sem criar consulta pública de cadastro."
+      }
+    },
+    "responses": {
+      "Erro401": {
+        "description": "Sessão ausente, expirada ou inválida.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro403": {
+        "description": "Ação não autorizada, origem ou CSRF inválido.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro404": {
+        "description": "Recurso inexistente ou indisponível para este acesso.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro409": {
+        "description": "Conflito de duplicidade, estado, sugestão pendente ou idempotência; não revelar dados privados.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro412": {
+        "description": "Versão divergente; recarregar antes de editar.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro413": {
+        "description": "Requisição ou arquivo excede os limites.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro415": {
+        "description": "Tipo de conteúdo não aceito.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro422": {
+        "description": "Entrada inválida; regras por campo em field_errors.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro428": {
+        "description": "If-Match obrigatório não informado.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro429": {
+        "description": "Limite de requisições atingido.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          },
+          "Retry-After": {
+            "description": "Tempo de espera em segundos quando conhecido.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      },
+      "Erro503": {
+        "description": "Dependência indisponível; não declarar sucesso de gravação não confirmada.",
+        "headers": {
+          "Cache-Control": {
+            "description": "Sem cache de dados privados ou de listagens nesta primeira versão.",
+            "schema": {
+              "type": "string",
+              "const": "no-store"
+            }
+          },
+          "Retry-After": {
+            "description": "Tempo de espera em segundos quando conhecido.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9]+$"
+            }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Erro"
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-contract-status": "implemented-locally-collection-disabled",
+  "x-implemented-operation-ids": [
+    "criarSessao",
+    "consultarSessao",
+    "encerrarSessao",
+    "listarProfissoesAtivas",
+    "listarProfissoesAdministrativas",
+    "criarProfissao",
+    "editarProfissao",
+    "enviarCadastroProfissional",
+    "enviarCadastroEmpresa",
+    "listarCadastros",
+    "consultarCadastro",
+    "editarCadastro",
+    "listarHistoricoCadastro",
+    "aprovarCadastro",
+    "reprovarCadastro",
+    "reabrirCadastro",
+    "despublicarProfissional",
+    "publicarProfissional",
+    "adicionarArquivoCadastro",
+    "removerArquivoCadastro",
+    "consultarImagemPrivada",
+    "listarProfissionaisPublicos",
+    "consultarProfissionalPublico",
+    "consultarLiveness",
+    "consultarReadiness",
+    "consultarHistoricoProfissao",
+    "consultarImagemPublicada",
+    "consultarConfiguracaoCadastro"
+  ],
+  "x-business-decisions-date": "2026-10-23",
+  "x-pending-decisions": [
+    "Retenção e exclusão de cadastros, imagens originais e histórico",
+    "Catálogo inicial de profissões revisado",
+    "Versões e texto legal dos aceites de coleta e publicação"
+  ],
+  "x-registration-collection-default-enabled": false
+}

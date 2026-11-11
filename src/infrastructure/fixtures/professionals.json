@@ -1,0 +1,616 @@
+[
+  {
+    "id": "1",
+    "name": "Profissional 01",
+    "title": "Pintura & Acabamento",
+    "bio": "Profissional fictício para demonstração de pintura & acabamento. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 1 hora",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 8,
+    "jobsCompleted": 150,
+    "satisfactionRate": 98,
+    "rating": 4.8,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Pintura Interna",
+      "Pintura Externa de Fachadas",
+      "Texturas e Grafiato",
+      "Massa Corrida",
+      "Pintura Airless"
+    ],
+    "courses": [
+      {
+        "name": "Especialização em Efeitos Decorativos",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "Curso Avançado de Pintura Mecanizada (Airless)",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2020",
+        "icon": "mdi:certificate-outline"
+      },
+      {
+        "name": "NR-35 - Trabalho em Altura",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2019 (Atualizado)",
+        "icon": "mdi:shield-check-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/9285360252ac9b8a.jpg",
+      "/images/reference/91a21b96e505377e.jpg",
+      "/images/reference/1656c701574c6723.jpg",
+      "/images/reference/b05a8c9ad35da454.jpg",
+      "/images/reference/d2396c7d8df682f4.jpg",
+      "/images/reference/44842235cf458a8d.jpg"
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Profissional 02",
+    "title": "Pintura Residencial",
+    "bio": "Profissional fictício para demonstração de pintura residencial. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 5,
+    "jobsCompleted": 120,
+    "satisfactionRate": 96,
+    "rating": 4.5,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": ["Pintura Residencial", "Texturas", "Massa Corrida"],
+    "courses": [
+      {
+        "name": "Técnicas de Pintura Residencial",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2021",
+        "icon": "mdi:school-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/9a0024dea51b9535.jpg",
+      "/images/reference/f639ce8bea8f73a1.jpg",
+      "/images/reference/2e9ea63d8f38f259.jpg"
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Profissional 03",
+    "title": "Eletricista Residencial e Comercial",
+    "bio": "Profissional fictício para demonstração de eletricista residencial e comercial. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 1 hora",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 12,
+    "jobsCompleted": 300,
+    "satisfactionRate": 99,
+    "rating": 4.9,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Elétrica Residencial",
+      "Elétrica Comercial",
+      "Quadro de Distribuição",
+      "CFTV",
+      "Automação"
+    ],
+    "courses": [
+      {
+        "name": "NR-10 - Segurança em Instalações Elétricas",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2023",
+        "icon": "mdi:shield-check-outline"
+      },
+      {
+        "name": "Instalações Elétricas ABNT NBR 5410",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2020",
+        "icon": "mdi:certificate-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/898866f1d66bc33e.jpg",
+      "/images/reference/8cf986bba9bb76cf.jpg",
+      "/images/reference/cb8bf02ef2e0a898.jpg",
+      "/images/reference/b42c3de7965df706.jpg"
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Profissional 04",
+    "title": "Encanador e Hidráulica",
+    "bio": "Profissional fictício para demonstração de encanador e hidráulica. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 3 horas",
+    "availabilityText": "Disponível na próxima semana",
+    "yearsExperience": 15,
+    "jobsCompleted": 450,
+    "satisfactionRate": 97,
+    "rating": 4.2,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Hidráulica Predial",
+      "Caça Vazamentos",
+      "Encanamento",
+      "Instalação de Caixas d'água"
+    ],
+    "courses": [
+      {
+        "name": "Instalações Hidráulicas Prediais",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2018",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "NR-18 - Segurança em Obras",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:shield-check-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/ecb770d79e8da987.jpg",
+      "/images/reference/ff503980ab1f7f09.jpg",
+      "/images/reference/98979c0bb4a860a6.jpg"
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Profissional 05",
+    "title": "Pedreiro e Reformas",
+    "bio": "Profissional fictício para demonstração de pedreiro e reformas. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 20,
+    "jobsCompleted": 600,
+    "satisfactionRate": 96,
+    "rating": 3.8,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Alvenaria",
+      "Reforma Residencial",
+      "Reboco e Chapisco",
+      "Contrapiso",
+      "Demolição"
+    ],
+    "courses": [
+      {
+        "name": "Técnicas Avançadas de Alvenaria",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2019",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "NR-18 - Segurança em Obras",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2021",
+        "icon": "mdi:shield-check-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/7b699efa669b42e8.jpg",
+      "/images/reference/a1337f23de3faeb3.jpg",
+      "/images/reference/fb22ba0f86c755bd.jpg",
+      "/images/reference/5b6569d4adbcdafa.jpg"
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Profissional 06",
+    "title": "Paisagismo e Jardinagem",
+    "bio": "Profissional fictício para demonstração de paisagismo e jardinagem. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 4 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 7,
+    "jobsCompleted": 90,
+    "satisfactionRate": 100,
+    "rating": 4.7,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Paisagismo Residencial",
+      "Jardinagem",
+      "Lago Artificial",
+      "Irrigação Automatizada"
+    ],
+    "courses": [
+      {
+        "name": "Paisagismo e Jardinagem Avançado",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2020",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "Design de Ambientes Externos",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:certificate-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/cdbb771af3beebf2.jpg",
+      "/images/reference/800206e72b8178ef.jpg",
+      "/images/reference/0a57bdc6a7423788.jpg"
+    ]
+  },
+  {
+    "id": "7",
+    "name": "Profissional 07",
+    "title": "Instalação de Gás",
+    "bio": "Profissional fictício para demonstração de instalação de gás. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 1 hora",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 10,
+    "jobsCompleted": 200,
+    "satisfactionRate": 98,
+    "rating": 4.8,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Instalação de Gás Natural",
+      "Instalação de GLP",
+      "Teste de Estanqueidade",
+      "Manutenção de Redes de Gás"
+    ],
+    "courses": [
+      {
+        "name": "Instalações de Gás - ABNT NBR 15526",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:certificate-outline"
+      },
+      {
+        "name": "NR-13 - Vasos de Pressão",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2021",
+        "icon": "mdi:shield-check-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/cbffe233c3b26a15.jpg",
+      "/images/reference/6aee25d2753400c5.jpg",
+      "/images/reference/d00515d81539303c.jpg"
+    ]
+  },
+  {
+    "id": "8",
+    "name": "Profissional 08",
+    "title": "Gesseira e Drywall",
+    "bio": "Profissional fictício para demonstração de gesseira e drywall. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível na próxima semana",
+    "yearsExperience": 9,
+    "jobsCompleted": 180,
+    "satisfactionRate": 97,
+    "rating": 4.5,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": ["Forro de Gesso", "Drywall", "Gesso Liso", "Divisórias"],
+    "courses": [
+      {
+        "name": "Técnicas de Aplicação de Gesso",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2019",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "Instalação de Drywall ABNT",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2021",
+        "icon": "mdi:certificate-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/aedad4d198d53f51.jpg",
+      "/images/reference/0cc16a48be86aeda.jpg",
+      "/images/reference/e9e09a20b793f25a.jpg"
+    ]
+  },
+  {
+    "id": "9",
+    "name": "Profissional 09",
+    "title": "Energia Solar",
+    "bio": "Profissional fictício para demonstração de energia solar. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 6,
+    "jobsCompleted": 85,
+    "satisfactionRate": 99,
+    "rating": 4.9,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Energia Solar Residencial",
+      "Energia Solar Comercial",
+      "Homologação ANEEL",
+      "Manutenção de Painéis"
+    ],
+    "courses": [
+      {
+        "name": "Instalação de Sistemas Fotovoltaicos",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2021",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "NR-35 - Trabalho em Altura",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:shield-check-outline"
+      },
+      {
+        "name": "Dimensionamento de Sistemas Off-Grid",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2023",
+        "icon": "mdi:certificate-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/14d0bcffec5ea9b4.jpg",
+      "/images/reference/9b73f35c4d78eeb6.jpg",
+      "/images/reference/3f0ca870c8e2b4cc.jpg",
+      "/images/reference/b236a6ead579ee2f.jpg"
+    ]
+  },
+  {
+    "id": "10",
+    "name": "Profissional 10",
+    "title": "Serralheiro e Metalúrgico",
+    "bio": "Profissional fictício para demonstração de serralheiro e metalúrgico. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 3 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 14,
+    "jobsCompleted": 380,
+    "satisfactionRate": 95,
+    "rating": 4.2,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Grades e Portões",
+      "Escadas Metálicas",
+      "Estruturas em Aço Inox",
+      "Cobertura Metálica",
+      "Corrimões"
+    ],
+    "courses": [
+      {
+        "name": "Soldagem MIG/TIG",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2018",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "NR-12 - Segurança em Máquinas",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2020",
+        "icon": "mdi:shield-check-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/5100a923d4310b19.jpg",
+      "/images/reference/a03dbe7b08dbe4dc.jpg",
+      "/images/reference/896cd6bcc0f31193.jpg"
+    ]
+  },
+  {
+    "id": "11",
+    "name": "Profissional 11",
+    "title": "Construtor de Piscinas",
+    "bio": "Profissional fictício para demonstração de construtor de piscinas. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 11,
+    "jobsCompleted": 130,
+    "satisfactionRate": 98,
+    "rating": 3.8,
+    "reviewCount": 10,
+    "isTopRated": true,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Piscinas de Alvenaria",
+      "Piscinas de Fibra",
+      "Reforma de Piscinas",
+      "Hidráulica de Piscinas"
+    ],
+    "courses": [
+      {
+        "name": "Construção e Manutenção de Piscinas",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2019",
+        "icon": "mdi:school-outline"
+      },
+      {
+        "name": "Tratamento de Água e Química de Piscinas",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2022",
+        "icon": "mdi:certificate-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/032bb18b888b8473.jpg",
+      "/images/reference/6f8fc3f129717edd.jpg",
+      "/images/reference/43da4857876b20ac.jpg",
+      "/images/reference/6673047514d319ed.jpg"
+    ]
+  },
+  {
+    "id": "12",
+    "name": "Profissional 12",
+    "title": "Vidraceiro",
+    "bio": "Profissional fictício para demonstração de vidraceiro. Experiência em obras residenciais e comerciais, com foco na organização, qualidade e cumprimento de prazos.",
+    "avatarUrl": "/images/placeholder-avatar.png",
+    "locationText": "Foz do Iguaçu, PR",
+    "responseTimeText": "Responde em até 2 horas",
+    "availabilityText": "Disponível esta semana",
+    "yearsExperience": 8,
+    "jobsCompleted": 210,
+    "satisfactionRate": 97,
+    "rating": 4.7,
+    "reviewCount": 10,
+    "isTopRated": false,
+    "verifications": [
+      {
+        "text": "Profissional Verificado Smart Construction",
+        "type": "success"
+      },
+      {
+        "text": "Garantia Integral da Obra",
+        "type": "warning"
+      }
+    ],
+    "specialties": [
+      "Box de Banheiro",
+      "Espelhos",
+      "Fachadas de Vidro",
+      "Películas",
+      "Janelas de Vidro Temperado"
+    ],
+    "courses": [
+      {
+        "name": "Técnicas em Vidros e Espelhos",
+        "institution": "Instituto de Formação — Demonstração",
+        "year": "2020",
+        "icon": "mdi:school-outline"
+      }
+    ],
+    "portfolioUrls": [
+      "/images/reference/9277ff55a3f7b65b.jpg",
+      "/images/reference/71a0bebe556ad9b1.jpg",
+      "/images/reference/85ade78d4b17b9bc.jpg"
+    ]
+  }
+]

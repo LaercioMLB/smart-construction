@@ -1,0 +1,111 @@
+{
+  "features": [
+    {
+      "icon": "mdi:briefcase",
+      "title": "Profissionais Qualificados",
+      "description": "Nossa equipe é certificada, experiente e em constante atualização. Cada profissional traz expertise real."
+    },
+    {
+      "icon": "mdi:star",
+      "title": "Qualidade Superior",
+      "description": "Não fazemos concessões. Materiais premium, execução impecável e detalhes que fazem diferença."
+    },
+    {
+      "icon": "mdi:clock",
+      "title": "Prazos Cumpridos",
+      "description": "Entregamos quando prometemos. Sua confiança é nosso bem mais valioso e respeitamos isso."
+    },
+    {
+      "icon": "mdi:pencil-ruler",
+      "title": "Gestão de Projetos",
+      "description": "Planejamos cada etapa com precisão. Você acompanha o progresso do início ao fim."
+    },
+    {
+      "icon": "mdi:shield-check",
+      "title": "Segurança e Qualidade",
+      "description": "Conformidade com normas, inspeção rigorosa e garantia integral em todos os trabalhos."
+    },
+    {
+      "icon": "mdi:emoticon",
+      "title": "Satisfação Garantida",
+      "description": "Seu contentamento é nosso sucesso. Atendimento personalizado e suporte pós-obra continuado."
+    },
+    {
+      "icon": "mdi:face-agent",
+      "title": "Suporte Pós-Obra",
+      "description": "Não desaparecemos após a conclusão. Garantia integral e sempre disponível para qualquer necessidade."
+    },
+    {
+      "icon": "mdi:lightbulb-on",
+      "title": "Inovação Constante",
+      "description": "Acompanhamos tendências e novas técnicas. Soluções modernas que agregam valor ao seu projeto."
+    },
+    {
+      "icon": "mdi:currency-usd",
+      "title": "Preço Justo",
+      "description": "Transparência total. Você sabe exatamente aonde vai cada real investido, sem surpresas."
+    }
+  ],
+  "historyStats": [],
+  "missionStats": [
+    {
+      "icon": "mdi:eye",
+      "value": "Transparência Total",
+      "label": "Você sabe exatamente o que vai receber, quando e por qual preço. Sem surpresas, sem rodeios."
+    },
+    {
+      "icon": "mdi:star",
+      "value": "Qualidade Garantida",
+      "label": "Cada detalhe importa. O mesmo padrão de execução em todos os projetos, sem exceção."
+    },
+    {
+      "icon": "mdi:clock",
+      "value": "Prazos Respeitados",
+      "label": "Se dissemos 30 dias, você recebe em 30 dias. Porque sua confiança é nosso compromisso."
+    }
+  ],
+  "historyParagraphs": [
+    "A Smart Construction é uma empresa fictícia criada para o laboratório de implantação em nuvem."
+  ],
+  "missionParagraphs": [
+    "Conectar serviços, materiais e profissionais em um exercício de plataforma digital."
+  ],
+  "termos-de-uso": {
+    "version": "termos-lab-2026-11-11",
+    "updatedAt": "2026-11-11",
+    "toc": [
+      {
+        "id": "laboratorio",
+        "title": "Ambiente fictício"
+      },
+      {
+        "id": "cadastros",
+        "title": "Cadastros e publicação"
+      },
+      {
+        "id": "dados",
+        "title": "Dados do exercício"
+      }
+    ],
+    "html": "<section id=\"laboratorio\"><h2>Ambiente fictício</h2><p>A Smart Construction é uma empresa fictícia. Esta versão é exclusiva para o laboratório de Engenharia de Software; não oferece serviços, pagamentos ou contratos reais.</p></section><section id=\"cadastros\"><h2>Cadastros e publicação</h2><p>Use somente dados sintéticos de pessoas e empresas com declaração de 18 anos completos ou mais. Cadastros são persistidos na API, analisados pelo administrador e apenas profissionais aprovados e publicados aparecem na área pública. Empresas e contatos ficam restritos ao painel.</p></section><section id=\"dados\"><h2>Dados do exercício</h2><p>Não envie documentos pessoais, contatos ou fotos reais. Imagens anexadas são armazenadas no ambiente do exercício. As credenciais administrativas são criadas localmente. Os textos e aceites são simulações didáticas, versionadas para demonstrar o contrato entre frontend e API. Para encerrar a atividade e remover dados de laboratório, siga a orientação do professor.</p></section>"
+  },
+  "politica-de-privacidade": {
+    "version": "privacidade-lab-2026-11-11",
+    "updatedAt": "2026-11-11",
+    "toc": [
+      {
+        "id": "laboratorio",
+        "title": "Ambiente fictício"
+      },
+      {
+        "id": "cadastros",
+        "title": "Cadastros e publicação"
+      },
+      {
+        "id": "dados",
+        "title": "Dados do exercício"
+      }
+    ],
+    "html": "<section id=\"laboratorio\"><h2>Ambiente fictício</h2><p>A Smart Construction é uma empresa fictícia. Esta versão é exclusiva para o laboratório de Engenharia de Software; não oferece serviços, pagamentos ou contratos reais.</p></section><section id=\"cadastros\"><h2>Cadastros e publicação</h2><p>Use somente dados sintéticos de pessoas e empresas com declaração de 18 anos completos ou mais. Cadastros são persistidos na API, analisados pelo administrador e apenas profissionais aprovados e publicados aparecem na área pública. Empresas e contatos ficam restritos ao painel.</p></section><section id=\"dados\"><h2>Dados do exercício</h2><p>Não envie documentos pessoais, contatos ou fotos reais. Imagens anexadas são armazenadas no ambiente do exercício. As credenciais administrativas são criadas localmente. Os textos e aceites são simulações didáticas, versionadas para demonstrar o contrato entre frontend e API. Para encerrar a atividade e remover dados de laboratório, siga a orientação do professor.</p></section>"
+  }
+}

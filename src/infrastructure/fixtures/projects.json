@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "type": "before-after",
+    "category": "reformas",
+    "imageUrl": "/images/reference/ab87c6640d1dc083.jpg",
+    "beforeImageUrl": "/images/reference/a6b7d0711fff0e44.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Reforma",
+    "title": "Reforma Quarto Master",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Reforma completa de quarto master com troca de revestimentos, pintura, marcenaria planejada e iluminação de destaque. O projeto priorizou conforto, funcionalidade e um acabamento sofisticado que transformou completamente a experiência do ambiente.",
+    "location": "Localização fictícia do projeto",
+    "duration": "3 semanas",
+    "year": 2025,
+    "services": ["Pintura", "Revestimentos", "Marcenaria", "Iluminação"],
+    "gallery": [
+      "/images/reference/ab87c6640d1dc083.jpg",
+      "/images/reference/af68a151d4eaa2a8.jpg",
+      "/images/reference/312b04dd71d2928a.jpg",
+      "/images/reference/7687d75883858e4e.jpg"
+    ]
+  },
+  {
+    "id": 2,
+    "type": "classic",
+    "category": "acabamentos",
+    "imageUrl": "/images/reference/c292368dd4bc3499.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Interna",
+    "title": "Sala de Estar",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Projeto de acabamento completo para sala de estar com aplicação de revestimentos, pintura em tons neutros, instalação de rodapés e molduras em gesso. O resultado é um ambiente elegante, aconchegante e com acabamento de alto padrão.",
+    "location": "Localização fictícia do projeto",
+    "duration": "2 semanas",
+    "year": 2025,
+    "services": ["Pintura", "Gesso", "Revestimentos", "Rodapés"],
+    "gallery": [
+      "/images/reference/c292368dd4bc3499.jpg",
+      "/images/reference/7687d75883858e4e.jpg",
+      "/images/reference/3c7246c4e8c3cbba.jpg",
+      "/images/reference/312b04dd71d2928a.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "type": "classic",
+    "category": "construcoes",
+    "imageUrl": "/images/reference/c641f5e9c53ab76c.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Externa",
+    "title": "Fachada Moderna",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Projeto de fachada moderna com aplicação de revestimento texturizado, esquadrias de alumínio anodizado e iluminação de embutir. A composição entre volumes e materiais entrega uma identidade forte e contemporânea ao imóvel.",
+    "location": "Localização fictícia do projeto",
+    "duration": "5 semanas",
+    "year": 2025,
+    "services": ["Revestimento Externo", "Esquadrias", "Iluminação", "Pintura"],
+    "gallery": [
+      "/images/reference/c641f5e9c53ab76c.jpg",
+      "/images/reference/90bded7c6ab6b8bf.jpg",
+      "/images/reference/6735e879d32e06c1.jpg",
+      "/images/reference/13581e87824f7d21.jpg"
+    ]
+  },
+  {
+    "id": 4,
+    "type": "classic",
+    "category": "construcoes",
+    "imageUrl": "/images/reference/a0f3747e72b7ae08.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Externa",
+    "title": "Residência Alto Padrão",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Construção de residência alto padrão com estrutura em concreto armado, fachada em pedra natural e esquadrias em alumínio. O projeto uniu arquitetura contemporânea com materiais nobres, entregando uma residência sofisticada e durável.",
+    "location": "Localização fictícia do projeto",
+    "duration": "12 meses",
+    "year": 2025,
+    "services": ["Estrutura", "Alvenaria", "Revestimento Externo", "Esquadrias", "Pintura"],
+    "gallery": [
+      "/images/reference/a0f3747e72b7ae08.jpg",
+      "/images/reference/c641f5e9c53ab76c.jpg",
+      "/images/reference/90bded7c6ab6b8bf.jpg",
+      "/images/reference/6735e879d32e06c1.jpg"
+    ]
+  },
+  {
+    "id": 5,
+    "type": "classic",
+    "category": "piscinas",
+    "imageUrl": "/images/reference/00bb6bd6b71f647f.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Piscina",
+    "title": "Piscina com Deck",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Construção de piscina de alvenaria com deck em madeira cumaru tratada, iluminação subaquática e sistema de filtragem automatizado. O projeto integrou a área de lazer à paisagem do jardim criando um ambiente de alto padrão.",
+    "location": "Localização fictícia do projeto",
+    "duration": "8 semanas",
+    "year": 2026,
+    "services": ["Piscina", "Deck", "Paisagismo", "Iluminação", "Automação"],
+    "gallery": [
+      "/images/reference/00bb6bd6b71f647f.jpg",
+      "/images/reference/2ee1f603837aaee0.jpg",
+      "/images/reference/6948a6d4ff6e661f.jpg",
+      "/images/reference/54139156c16cf83f.jpg"
+    ]
+  },
+  {
+    "id": 7,
+    "type": "classic",
+    "category": "acabamentos",
+    "imageUrl": "/images/reference/3c7246c4e8c3cbba.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Cozinha",
+    "title": "Cozinha Planejada",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Instalação de cozinha planejada com marcenaria sob medida, revestimento em porcelanato acetinado, bancada em quartzo e iluminação embutida em LED. Um projeto funcional e moderno que aproveita ao máximo o espaço disponível.",
+    "location": "Localização fictícia do projeto",
+    "duration": "3 semanas",
+    "year": 2025,
+    "services": ["Marcenaria", "Revestimentos", "Bancada", "Iluminação"],
+    "gallery": [
+      "/images/reference/3c7246c4e8c3cbba.jpg",
+      "/images/reference/af68a151d4eaa2a8.jpg",
+      "/images/reference/8162e09372d94f38.jpg",
+      "/images/reference/c292368dd4bc3499.jpg"
+    ]
+  },
+  {
+    "id": 8,
+    "type": "before-after",
+    "category": "reformas",
+    "imageUrl": "/images/reference/54139156c16cf83f.jpg",
+    "beforeImageUrl": "/images/reference/e1929c2a856b6104.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Reforma",
+    "title": "Área Externa Revitalizada",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Revitalização completa de área externa com aplicação de revestimento antiderrapante, pintura de muros, instalação de pergolado de madeira tratada e readequação da iluminação. A transformação trouxe vida e funcionalidade ao espaço.",
+    "location": "Localização fictícia do projeto",
+    "duration": "4 semanas",
+    "year": 2026,
+    "services": ["Revestimentos", "Pintura", "Pergolado", "Iluminação"],
+    "gallery": [
+      "/images/reference/54139156c16cf83f.jpg",
+      "/images/reference/e1929c2a856b6104.jpg",
+      "/images/reference/0bd993e1476b4649.jpg",
+      "/images/reference/7687d75883858e4e.jpg"
+    ]
+  },
+  {
+    "id": 9,
+    "type": "classic",
+    "category": "construcoes",
+    "imageUrl": "/images/reference/90bded7c6ab6b8bf.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Construção",
+    "title": "Sobrado Moderno",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Construção de sobrado moderno com dois pavimentos, varanda integrada, fachada em concreto aparente e revestimento em porcelanato externo. O projeto combina estética minimalista com soluções estruturais eficientes para um resultado de alto impacto visual.",
+    "location": "Localização fictícia do projeto",
+    "duration": "14 meses",
+    "year": 2026,
+    "services": ["Estrutura", "Alvenaria", "Revestimento Externo", "Fachada", "Esquadrias"],
+    "gallery": [
+      "/images/reference/90bded7c6ab6b8bf.jpg",
+      "/images/reference/a0f3747e72b7ae08.jpg",
+      "/images/reference/c641f5e9c53ab76c.jpg",
+      "/images/reference/13581e87824f7d21.jpg"
+    ]
+  },
+  {
+    "id": 10,
+    "type": "classic",
+    "category": "acabamentos",
+    "imageUrl": "/images/reference/312b04dd71d2928a.jpg",
+    "aspectRatio": "2/3",
+    "tag": "Banheiro",
+    "title": "Banheiro de Luxo",
+    "description": "Projeto ilustrativo do laboratório. As imagens são referências visuais e não documentam uma obra executada pela Smart Construction. Reforma e acabamento de banheiro de luxo com revestimento em mármore travertino, louças de design, box em vidro temperado e iluminação indireta em LED. Cada detalhe foi planejado para criar uma experiência de bem-estar e sofisticação.",
+    "location": "Localização fictícia do projeto",
+    "duration": "3 semanas",
+    "year": 2025,
+    "services": ["Revestimentos", "Louças e Metais", "Box", "Iluminação", "Pintura"],
+    "gallery": [
+      "/images/reference/312b04dd71d2928a.jpg",
+      "/images/reference/af68a151d4eaa2a8.jpg",
+      "/images/reference/ab87c6640d1dc083.jpg",
+      "/images/reference/3c7246c4e8c3cbba.jpg"
+    ]
+  }
+]

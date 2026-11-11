@@ -1,0 +1,7 @@
+next-env.d.ts
+.next/
+.cache/
+.reference/
+node_modules/
+playwright-report/
+test-results/

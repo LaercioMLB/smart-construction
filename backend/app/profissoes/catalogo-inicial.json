@@ -1,0 +1,43 @@
+{
+  "status": "base_aprovada",
+  "versao": "2026-11-05",
+  "origem": "Base de 24 profissões aprovada em 24/10/2026, preservada e ampliada com Arquiteto conforme pedido de adequação da lista de serviços em 05/11/2026.",
+  "observacao": "Referências servem para revisão humana. Não vinculam profissões a serviços no banco. Carga manual auditada, sem importação automática; preservar opções existentes e inativas.",
+  "profissoes": [
+    { "nome": "Arquiteto", "servicos_referencia": ["arquiteto"] },
+    { "nome": "Pedreiro", "servicos_referencia": ["pedreiro", "reforma-e-construcao"] },
+    { "nome": "Pintor", "servicos_referencia": ["pintor"] },
+    { "nome": "Eletricista", "servicos_referencia": ["eletricista", "aterramento-e-spda"] },
+    { "nome": "Encanador", "servicos_referencia": ["encanador", "desentupidora"] },
+    { "nome": "Azulejista", "servicos_referencia": ["ceramica-e-porcelanato"] },
+    { "nome": "Gesseiro", "servicos_referencia": ["gesso-e-drywall"] },
+    { "nome": "Carpinteiro", "servicos_referencia": ["instalacao-de-portas", "deck-de-madeira"] },
+    { "nome": "Marceneiro", "servicos_referencia": ["marcenaria", "ripados"] },
+    { "nome": "Serralheiro", "servicos_referencia": ["metalurgica", "corrimao-e-guarda-corpo"] },
+    { "nome": "Vidraceiro", "servicos_referencia": ["vidracaria"] },
+    { "nome": "Jardineiro", "servicos_referencia": ["jardinagem-e-paisagismo"] },
+    { "nome": "Paisagista", "servicos_referencia": ["jardinagem-e-paisagismo", "lago-artificial"] },
+    { "nome": "Técnico em ar-condicionado", "servicos_referencia": ["ar-condicionado"] },
+    { "nome": "Instalador de energia solar", "servicos_referencia": ["energia-solar"] },
+    { "nome": "Impermeabilizador", "servicos_referencia": ["impermeabilizacao"] },
+    { "nome": "Calheiro", "servicos_referencia": ["rufos-e-calhas"] },
+    { "nome": "Montador de móveis", "servicos_referencia": ["montador-de-moveis"] },
+    { "nome": "Tapeceiro", "servicos_referencia": ["sofa-sob-medida", "reforma-de-estofados"] },
+    { "nome": "Piscineiro", "servicos_referencia": ["manutencao-de-piscina"] },
+    { "nome": "Profissional de limpeza pós-obra", "servicos_referencia": ["limpeza-pos-obra"] },
+    {
+      "nome": "Técnico em segurança eletrônica",
+      "servicos_referencia": [
+        "cameras-de-seguranca",
+        "alarme-residencial",
+        "interfone-e-video-porteiro"
+      ]
+    },
+    { "nome": "Chaveiro", "servicos_referencia": ["chaveiro"] },
+    { "nome": "Instalador de gás", "servicos_referencia": ["instalacao-de-gas"] },
+    {
+      "nome": "Instalador de pisos laminados e vinílicos",
+      "servicos_referencia": ["piso-laminado-e-vinilico"]
+    }
+  ]
+}

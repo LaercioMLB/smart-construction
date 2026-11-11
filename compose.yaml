@@ -1,0 +1,298 @@
+name: smart-construction
+
+services:
+  web:
+    image: smart-construction-web:local
+    build:
+      context: .
+      target: runner
+      args:
+        NEXT_PUBLIC_ASSETS_BASE_URL: /assets
+        ASSETS_PROXY_URL: http://storage:8333/${ASSETS_BUCKET:-smart-assets}
+        API_PROXY_URL: http://api:8000
+    environment:
+      API_INTERNAL_URL: http://api:8000
+      REGISTRATIONS_UI_ENABLED: ${REGISTRATIONS_UI_ENABLED:-true}
+    depends_on:
+      api:
+        condition: service_healthy
+      storage-init:
+        condition: service_completed_successfully
+    init: true
+    restart: unless-stopped
+
+  gateway:
+    image: nginx:1.28-alpine
+    ports:
+      - '${BIND_ADDRESS:-127.0.0.1}:${HTTP_PORT:-8081}:80'
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1/healthz']
+      interval: 10s
+      timeout: 3s
+      retries: 12
+    restart: unless-stopped
+
+  backend-setup:
+    image: python:3.12-slim-bookworm
+    profiles: ['tools']
+    entrypoint: ['python', '/scripts/setup_secrets.py', '--directory', '/secrets']
+    volumes:
+      - ./backend/scripts:/scripts:ro
+      - ${SMART_SECRETS_DIR:-./.secrets}/backend:/secrets
+    network_mode: none
+
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: smart_construction
+      POSTGRES_USER: smart_migrator
+      POSTGRES_PASSWORD_FILE: /run/secrets/migration_password
+      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+    volumes:
+      - backend-data:/var/lib/postgresql/data
+      - ./backend/docker/init-db.sh:/docker-entrypoint-initdb.d/10-api-role.sh:ro
+    secrets:
+      - migration_password
+      - runtime_password
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U smart_migrator -d smart_construction']
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: local
+
+  api-migrate:
+    image: smart-construction-api:local
+    build:
+      context: ./backend
+      target: runtime
+    command: ['alembic', 'upgrade', 'head']
+    environment:
+      SMART_API_DB_HOST: db
+      SMART_API_DB_USER: smart_migrator
+      SMART_API_DB_PASSWORD_FILE: /run/secrets/migration_password
+    secrets:
+      - migration_password
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: 'no'
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: ['ALL']
+    security_opt: ['no-new-privileges:true']
+    logging:
+      driver: local
+
+  api:
+    image: smart-construction-api:local
+    build:
+      context: ./backend
+      target: runtime
+    environment:
+      SMART_API_ENVIRONMENT: ${SMART_API_ENVIRONMENT:-development}
+      SMART_API_ALLOWED_ORIGINS: '["http://127.0.0.1:${HTTP_PORT:-8081}","http://localhost:${HTTP_PORT:-8081}"]'
+      SMART_API_DB_HOST: db
+      SMART_API_DB_USER: smart_api
+      SMART_API_DB_PASSWORD_FILE: /run/secrets/runtime_password
+      SMART_API_REGISTRATIONS_ENABLED: ${SMART_API_REGISTRATIONS_ENABLED:-true}
+      SMART_API_TERMS_VERSION: ${SMART_API_TERMS_VERSION:-termos-lab-2026-11-11}
+      SMART_API_PRIVACY_VERSION: ${SMART_API_PRIVACY_VERSION:-privacidade-lab-2026-11-11}
+      SMART_API_S3_ENDPOINT_URL: http://private-storage:8333
+      SMART_API_S3_ACCESS_KEY_FILE: /run/secrets/private_api_access
+      SMART_API_S3_SECRET_KEY_FILE: /run/secrets/private_api_secret
+    secrets:
+      - runtime_password
+      - private_api_access
+      - private_api_secret
+    depends_on:
+      db:
+        condition: service_healthy
+      api-migrate:
+        condition: service_completed_successfully
+      private-storage-init:
+        condition: service_completed_successfully
+    init: true
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: ['ALL']
+    security_opt: ['no-new-privileges:true']
+    logging:
+      driver: local
+
+  private-storage:
+    image: chrislusf/seaweedfs:4.48
+    entrypoint: ['/bin/sh', '/opt/backend-storage/private-storage.sh']
+    volumes:
+      - private-storage-data:/data
+      - ./backend/docker:/opt/backend-storage:ro
+    secrets:
+      - private_identities
+      - private_admin_password
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:9333/cluster/status']
+      interval: 5s
+      timeout: 3s
+      retries: 24
+      start_period: 15s
+    restart: unless-stopped
+    init: true
+    logging:
+      driver: local
+
+  private-storage-init:
+    image: smart-construction-api:local
+    command: ['python', '-m', 'app.arquivos.bootstrap']
+    environment:
+      SMART_API_S3_ENDPOINT_URL: http://private-storage:8333
+      SMART_API_S3_ACCESS_KEY_FILE: /run/secrets/private_bootstrap_access
+      SMART_API_S3_SECRET_KEY_FILE: /run/secrets/private_bootstrap_secret
+    secrets:
+      - private_bootstrap_access
+      - private_bootstrap_secret
+    depends_on:
+      private-storage:
+        condition: service_healthy
+    read_only: true
+    tmpfs: ['/tmp']
+    cap_drop: ['ALL']
+    security_opt: ['no-new-privileges:true']
+    restart: 'no'
+    logging:
+      driver: local
+
+  api-test:
+    image: smart-construction-api:test
+    build:
+      context: ./backend
+      target: test
+    profiles: ['tools']
+    environment:
+      SMART_TEST_DB_HOST: db
+      SMART_TEST_DB_PASSWORD_FILE: /run/secrets/migration_password
+      SMART_TEST_API_PASSWORD_FILE: /run/secrets/runtime_password
+      SMART_TEST_CONTRACT_PATH: /contracts/openapi.json
+      PYTHONPATH: /app
+      SMART_TEST_S3_ENDPOINT_URL: http://private-storage:8333
+      SMART_TEST_S3_ACCESS_KEY_FILE: /run/secrets/private_api_access
+      SMART_TEST_S3_SECRET_KEY_FILE: /run/secrets/private_api_secret
+    secrets:
+      - migration_password
+      - runtime_password
+      - private_api_access
+      - private_api_secret
+    volumes:
+      - ./docs/api/openapi.json:/contracts/openapi.json:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      private-storage-init:
+        condition: service_completed_successfully
+
+  storage:
+    image: chrislusf/seaweedfs:4.48
+    entrypoint: ['/bin/sh', '/opt/storage/start.sh']
+    environment:
+      S3_BUCKET: ${ASSETS_BUCKET:-smart-assets}
+    volumes:
+      - storage-data:/data
+      - ./docker/storage:/opt/storage:ro
+    secrets:
+      - storage_access_key
+      - storage_secret_key
+      - storage_admin_password
+    healthcheck:
+      test: ['CMD', 'wget', '-q', '-O', '/dev/null', 'http://127.0.0.1:9333/cluster/status']
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    init: true
+    restart: unless-stopped
+
+  storage-init:
+    image: amazon/aws-cli:2.38.3
+    entrypoint: ['/bin/sh', '/opt/storage/init.sh']
+    environment:
+      S3_BUCKET: ${ASSETS_BUCKET:-smart-assets}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_EC2_METADATA_DISABLED: 'true'
+      AWS_PAGER: ''
+    volumes:
+      - ./docker/storage:/opt/storage:ro
+      - ./public/images:/seed:ro
+    secrets:
+      - storage_access_key
+      - storage_secret_key
+    depends_on:
+      storage:
+        condition: service_healthy
+    restart: 'no'
+
+  storage-setup:
+    image: node:24-bookworm-slim
+    profiles: ['tools']
+    entrypoint: ['node', '/opt/storage/setup.mjs']
+    volumes:
+      - ./docker/storage:/opt/storage:ro
+      - ${SMART_SECRETS_DIR:-./.secrets}/storage:/secrets
+
+  storage-cli:
+    image: amazon/aws-cli:2.38.3
+    profiles: ['tools']
+    entrypoint: ['/bin/sh', '/opt/storage/cli.sh']
+    environment:
+      S3_BUCKET: ${ASSETS_BUCKET:-smart-assets}
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_EC2_METADATA_DISABLED: 'true'
+      AWS_PAGER: ''
+    volumes:
+      - ./docker/storage:/opt/storage:ro
+      - ./backups/storage:/backup
+    secrets:
+      - storage_access_key
+      - storage_secret_key
+    depends_on:
+      storage:
+        condition: service_healthy
+
+volumes:
+  backend-data:
+  private-storage-data:
+
+  storage-data:
+
+secrets:
+  migration_password:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/migration-password
+  runtime_password:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/api-password
+  private_identities:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-identities.json
+  private_admin_password:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-admin-password
+  private_api_access:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-api-access-key
+  private_api_secret:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-api-secret-key
+  private_bootstrap_access:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-bootstrap-access-key
+  private_bootstrap_secret:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/backend/s3-bootstrap-secret-key
+  storage_access_key:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/storage/access-key
+  storage_secret_key:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/storage/secret-key
+  storage_admin_password:
+    file: ${SMART_SECRETS_DIR:-./.secrets}/storage/admin-password

@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Pintura e Acabamento",
+    "slug": "pintura-e-acabamento",
+    "examples": "Pintura, gesso, piso, revestimento, mármore, vidro"
+  },
+  {
+    "name": "Pedreiro e Obra",
+    "slug": "pedreiro-e-obra",
+    "examples": "Reboco, muro, demolição, impermeabilização, steel frame"
+  },
+  {
+    "name": "Serralheria e Metalúrgica",
+    "slug": "serralheria-e-metalurgica",
+    "examples": "Portão de ferro, grade, solda, estrutura metálica, corrimão"
+  },
+  {
+    "name": "Encanador e Vazamentos",
+    "slug": "encanador-e-vazamentos",
+    "examples": "Vazamento, entupimento, cano, caixa d'água, poço"
+  },
+  {
+    "name": "Elétrica e Energia Solar",
+    "slug": "eletrica-e-energia-solar",
+    "examples": "Eletricista, energia solar, automação"
+  },
+  {
+    "name": "Ar-Condicionado e Gás",
+    "slug": "ar-condicionado-e-gas",
+    "examples": "Instalação e manutenção de ar, gás encanado"
+  },
+  {
+    "name": "Jardim e Área Externa",
+    "slug": "jardim-e-area-externa",
+    "examples": "Jardim, calçada/paver, piscina, toldo, terraplanagem"
+  },
+  {
+    "name": "Reformas e Telhado",
+    "slug": "reformas-e-telhado",
+    "examples": "Reforma de casa, telhado, calhas"
+  },
+  {
+    "name": "Móveis e Marcenaria",
+    "slug": "moveis-e-marcenaria",
+    "examples": "Sofá sob medida, móveis planejados, montagem"
+  },
+  {
+    "name": "Limpeza e Dedetização",
+    "slug": "limpeza-e-dedetizacao",
+    "examples": "Limpeza pós-obra, dedetização, controle de pragas"
+  },
+  {
+    "name": "Formação e Capacitação",
+    "slug": "formacao-e-capacitacao",
+    "examples": "Consulta de cursos e capacitações para construção civil"
+  }
+]
